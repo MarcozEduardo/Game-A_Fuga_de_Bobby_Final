@@ -171,6 +171,9 @@ export function drawVictoryScreen(ctx: CanvasRenderingContext2D): void {
   ctx.fillText('- Bobby IA, Portfolio do Marcão', ctx.canvas.width / 2, py + 230);
   drawActionPill(ctx, ctx.canvas.width / 2, py + 262, 300, isTouch ? '[ TOQUE ] JOGAR DE NOVO' : '[ ESPAÇO ] JOGAR DE NOVO');
   ctx.fillStyle = '#8a93a8'; ctx.font = '13px "Courier New", monospace';
+  /* FIX — o drawActionPill devolve o alinhamento "left"; recentraliza
+     antes da frase, senão ela escorrega pra direita */
+  ctx.textAlign = 'center';
   ctx.fillText('Curtiu a jornada? Vamos conversar!', ctx.canvas.width / 2, py + 296);
   drawLinkedinCardButton(ctx, ctx.canvas.width / 2, py + 305);
   ctx.textAlign = 'left';

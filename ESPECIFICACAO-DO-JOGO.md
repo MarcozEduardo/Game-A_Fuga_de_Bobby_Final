@@ -55,9 +55,11 @@ src/game/
 ## 🐛 BUGS CONHECIDOS (fila de correção — 1 por vez)
 1. [x] **SOM** — resolvido (resumeAudio em todo gesto + garantia no loop)
 2. [x] **BOMBA** — resolvido (5 de dano no boss, mata inimigos a 80px, queimado, tremor)
-3. [ ] **PAREDE** — Bobby pula por cima do portão (lado direito) ← PRÓXIMO
-4. [ ] **ESTAÇÃO** — só tem a antena; faltam cerca/portão/casinha
-5. [ ] **PERFORMANCE MOBILE** — por último (ordem do chefe)
+3. [x] **ALINHAMENTO** — "Curtiu a jornada?" voltou ao centro (cards.ts)
+4. [x] **BURACO ANTES DO MARCOS** — agora é REAL (gap 1680→1800, 120px) com aviso de abismo
+5. [ ] **PAREDE** — Bobby pula por cima do portão (lado direito) ← PRÓXIMO
+6. [ ] **ESTAÇÃO** — só tem a antena; faltam cerca/portão/casinha
+7. [ ] **PERFORMANCE MOBILE** — por último (ordem do chefe)
 
 ## 🚫 PROIBIDO (lições aprendidas)
 - Trabalhar pela metade (causou a tela azul).

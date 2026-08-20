@@ -94,6 +94,7 @@ export function drawPlatforms(ctx: CanvasRenderingContext2D): void {
     }
   }
   drawAbyssWarning(ctx, 750, 950);
+  drawAbyssWarning(ctx, 1680, 1800); // FIX — o buraco REAL antes do MARCOS também avisa
 }
 
 function drawAbyssWarning(ctx: CanvasRenderingContext2D, start: number, end: number): void {

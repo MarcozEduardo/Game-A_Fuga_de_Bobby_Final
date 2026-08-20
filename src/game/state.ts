@@ -149,7 +149,7 @@ export function freshPlatforms(): Rect[] {
     { x: 1160, y: 250, w: 55, h: 15 },
     { x: 1260, y: 200, w: 55, h: 15 },
     { x: 1360, y: 250, w: 55, h: 15 },
-    { x: 1460, y: 350, w: 300, h: 100 },
+    { x: 1460, y: 350, w: 220, h: 100 },   // FIX — termina em 1680: buraco REAL (120px) antes do MARCOS
     { x: 1800, y: 350, w: 640, h: 100 },   // até a mina (2440)
     { x: 2440, y: 350, w: 110, h: 100 },   // piso da passagem
     { x: 2550, y: 350, w: 850, h: 100 },   // câmara da mina (2550-3400)
