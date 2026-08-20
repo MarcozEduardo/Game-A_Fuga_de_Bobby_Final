@@ -23,8 +23,22 @@ export function resumeAudio(): void {
   }
 }
 
-export function playTone(freq: number, dur: number, type: OscillatorType = 'sine', seq: number[] = []): void {
+/* ---------- controle de polifonia (evita engasgo no mobile em cena cheia) ---------- */
+const lastPlayed: Record<string, number> = {};
+let activeVoices = 0;
+const MAX_VOICES = 10;      // teto de osciladores de SFX tocando ao mesmo tempo
+const MIN_GAP_MS = 35;      // não deixa o MESMO som re-disparar mais rápido que isso
+
+export function playTone(freq: number, dur: number, type: OscillatorType = 'sine', seq: number[] = [], key?: string): void {
   try {
+    const now = performance.now();
+    if (key) {
+      const last = lastPlayed[key] ?? 0;
+      if (now - last < MIN_GAP_MS) return;      // ignora spam do mesmo som
+      lastPlayed[key] = now;
+    }
+    if (activeVoices >= MAX_VOICES) return;      // corta se já tá lotado
+
     const ctx = getCtx();
     const o = ctx.createOscillator();
     const g = ctx.createGain();
@@ -38,10 +52,12 @@ export function playTone(freq: number, dur: number, type: OscillatorType = 'sine
       const s = dur / seq.length;
       seq.forEach((f, i) => o.frequency.setValueAtTime(f, ctx.currentTime + s * i));
     }
+    activeVoices++;
+    o.onended = () => { activeVoices--; o.disconnect(); g.disconnect(); };
     o.start(ctx.currentTime);
     o.stop(ctx.currentTime + dur);
   } catch {
-    /* silencioso */
+    activeVoices = Math.max(0, activeVoices - 1);
   }
 }
 
@@ -49,13 +65,13 @@ export const SOUNDS = {
   jump: () => playTone(200, 0.1, 'triangle'),
   coin: () => playTone(800, 0.15, 'square', [800, 1200]),
   star: () => playTone(1200, 0.2, 'sine', [1200, 1600, 2000]),
-  hit: () => playTone(100, 0.3, 'sawtooth', [100, 80]),
+  hit: () => playTone(100, 0.3, 'sawtooth', [100, 80], 'hit'),
   gameOver: () => playTone(200, 0.5, 'sawtooth', [200, 150, 100, 50]),
   victory: () => playTone(600, 0.6, 'sine', [600, 700, 800, 1000, 1200]),
-  shoot: () => playTone(350, 0.08, 'square', [350, 300]),
+  shoot: () => playTone(350, 0.08, 'square', [350, 300], 'shoot'),
   heal: () => playTone(500, 0.4, 'sine', [500, 700, 900, 1100]),
   respawn: () => playTone(150, 0.2, 'sawtooth', [150, 200, 250]),
-  bossHit: () => playTone(80, 0.15, 'sawtooth', [80, 60]),
+  bossHit: () => playTone(80, 0.15, 'sawtooth', [80, 60], 'bossHit'),
   bossRoar: () => playTone(60, 0.6, 'sawtooth', [60, 80, 60, 40, 60]),
   fall: () => playTone(300, 0.4, 'sine', [300, 200, 100, 50]),
   stomp: () => playTone(300, 0.15, 'square', [300, 500]),
@@ -70,10 +86,10 @@ export const SOUNDS = {
   unlock: () => playTone(300, 0.4, 'square', [300, 400, 500, 600]),
   signal: () => playTone(800, 0.6, 'sine', [800, 900, 800, 900, 1000, 1200]),
   punch: () => {
-    playTone(180, 0.18, 'sawtooth', [180, 60]);
-    playTone(90, 0.18, 'square', [90, 30]);
+    playTone(180, 0.18, 'sawtooth', [180, 60], 'punch');
+    playTone(90, 0.18, 'square', [90, 30], 'punch2');
   },
-  bulletHit: () => playTone(600, 0.12, 'square', [600, 150]),
+  bulletHit: () => playTone(600, 0.12, 'square', [600, 150], 'bulletHit'),
   bombThrow: () => playTone(250, 0.15, 'triangle', [250, 160]),
   bombGet: () => playTone(400, 0.35, 'sine', [400, 600, 800, 1000]),
   conquest: () => {
