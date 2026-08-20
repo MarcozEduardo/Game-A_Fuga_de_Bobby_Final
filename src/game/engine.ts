@@ -270,11 +270,13 @@ export function createGame(canvas: HTMLCanvasElement, overlay: HTMLCanvasElement
       if (t.clientX < window.innerWidth * 0.55) {
         if (G.joy.id === -1) {
           G.joy.id = t.identifier; G.joy.active = true;
-          G.joy.baseX = 95; G.joy.baseY = overlay.height - 115;
-          let tdx = t.clientX - G.joy.baseX, tdy = t.clientY - G.joy.baseY;
-          const tlen = Math.hypot(tdx, tdy);
-          if (tlen > JOY_R) { tdx = (tdx / tlen) * JOY_R; tdy = (tdy / tlen) * JOY_R; }
-          G.joy.x = G.joy.baseX + tdx; G.joy.y = G.joy.baseY + tdy;
+          /* FIX (diff do chefe) — joystick FLUTUANTE: nasce embaixo de onde
+             o polegar tocou, clampado pra nunca estourar a borda da tela
+             nem invadir a metade direita (zona de tiro/bomba) */
+          const margin = JOY_R + 10;
+          G.joy.baseX = Math.min(Math.max(t.clientX, margin), overlay.width * 0.55 - margin);
+          G.joy.baseY = Math.min(Math.max(t.clientY, margin), overlay.height - margin);
+          G.joy.x = G.joy.baseX; G.joy.y = G.joy.baseY;
           G.joy.jumpHeld = false;
         }
       } else {
@@ -297,9 +299,15 @@ export function createGame(canvas: HTMLCanvasElement, overlay: HTMLCanvasElement
         if (dx <= -DEAD_ZONE) G.player.dir = -1;
         else if (dx >= DEAD_ZONE) G.player.dir = 1;
         G.keys['ArrowDown'] = dy >= JUMP_ZONE;
+        /* FIX (diff do chefe) — "às vezes não pula": antes o jumpHeld era
+           marcado MESMO no ar (doJump sem efeito), e ao aterrissar com o
+           dedo ainda pra cima o pulo era ignorado. Agora só marca quando
+           o pulo realmente acontece; no ar, deixa destravado. */
         if (dy <= -JUMP_ZONE) {
-          if (!G.joy.jumpHeld) { doJump(); G.joy.jumpHeld = true; }
-        } else G.joy.jumpHeld = false;
+          if (!G.joy.jumpHeld && G.player.onGround) { doJump(); G.joy.jumpHeld = true; }
+        } else {
+          G.joy.jumpHeld = false;
+        }
       }
     }
   }

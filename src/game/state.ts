@@ -186,7 +186,7 @@ export function freshBoss(): BossState {
   return {
     x: 2900, y: 100, w: BW, h: BH, speed: 2, dir: -1, frame: 0, timer: 0,
     hp: 10, maxHp: 10, hitsReceived: 0, shootCooldown: 0, active: false, defeated: false,
-    pattern: 0, patternTimer: 0, baseY: 100, lastX: 2900, lastY: 200,
+    pattern: 0, patternTimer: 0, baseY: 150, lastX: 2900, lastY: 200, // TUNING — boss mais baixo (era 100, "não saía de cima")
       deathT: 0, hidden: false, fallVelY: 0,
       stunned: 0,                                        // ⬅️ NOVO
     };

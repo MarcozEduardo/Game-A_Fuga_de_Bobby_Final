@@ -66,7 +66,10 @@ src/game/
 11. [ ] **MORTOS DO TAMANHO NORMAL DO BOBBY** (hoje estão menores) — `entidades/robos.ts` / `lugares/camara.ts`
 12. [ ] **PRISIONEIROS LUTANDO DE DENTRO PRA FORA** (hoje lutam pra entrar) — mexe na cena APROVADA: pinça! — `state.ts` + `entidades/robos.ts`
 13. [ ] **TRAVA: morrer na plataforma com o boss encostando** congela o jogo — diagnosticar a causa primeiro
-14. [ ] **PULAR NA CABEÇA DO BOSS** (stomp) — mecânica nova; já existe `boss.stunned` (bomba atordoa 90f)
+14. [x] **PULAR NA CABEÇA DO BOSS** (stomp) — entregue: quica (-10 velY), dano 1 (ou 2 com o boss atordoado pela bomba); stun agora CONGELA o boss ~1,5s — `personagens/boss.ts`
+17. [x] **JOYSTICK FLUTUANTE** (diff do chefe) — nasce onde o polegar toca, clampado à metade esquerda; assinatura do overlay inclui a âncora — `engine.ts` + `controles/joystick.ts`
+18. [x] **BUG DO PULO NO MOBILE** (diff do chefe) — `jumpHeld` só marca quando o pulo acontece (no chão); aterrissou com dedo pra cima = pula na hora — `engine.ts`
+19. [x] **BOSS MAIS BAIXO** — `baseY` 100→150: padrões oscilam mais perto do alcance — `state.ts`; já existe `boss.stunned` (bomba atordoa 90f)
 15. [x] **BOMBA FERINDO O BOSS** — dano agora medido em distância HORIZONTAL (<150px dos pés); antes media até o centro do boss voando e nunca alcançava a explosão no chão — `entidades/objetos/bombas.ts`
 16. [x] **PAREDES DO COVIL NA DERROTA** — o ramo DEFEAT do gameLoop agora desenha câmara/mina/portão/base (antes "sumiam" ao morrer lá dentro) — `engine.ts`
 

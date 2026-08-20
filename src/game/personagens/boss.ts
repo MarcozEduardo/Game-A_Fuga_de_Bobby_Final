@@ -35,6 +35,11 @@ export function drawBoss(ctx: CanvasRenderingContext2D): void {
 export function updateBoss(): void {
   const boss = G.boss;
   if (!boss.active || boss.defeated) return;
+
+  /* STUN (bomba): o chefão congela ~1,5s no ar — sem andar, sem atirar.
+     É a janela pra pular na cabeça dele (dano em dobro) */
+  if (boss.stunned > 0) boss.stunned--;
+  else {
   boss.patternTimer++;
   if (boss.patternTimer > 180) { boss.pattern = (boss.pattern + 1) % 3; boss.patternTimer = 0; }
   switch (boss.pattern) {
@@ -72,11 +77,26 @@ export function updateBoss(): void {
       }
       break;
   }
+  } // fecha o else do stun
   /* o boss NUNCA sai da câmara */
   boss.x = Math.max(CHAMBER_X0 + 10, Math.min(CHAMBER_X1 - boss.w - 26, boss.x));
   boss.y = Math.max(95, Math.min(250, boss.y));
   boss.lastX = boss.x; boss.lastY = boss.y;
-  if (!G.player.invulnerable && !G.player.hasShield && G.player.x + G.player.w > boss.x && G.player.x < boss.x + boss.w && G.player.y + G.player.h > boss.y && G.player.y < boss.y + boss.h) takeDamage();
+  /* CONTATO com o boss: STOMP de cima pra baixo (quica, causa dano —
+     DOBRADO se ele estiver atordoado pela bomba) ou dano no Bobby.
+     Agora a luta se resolve também de perto, não só no tiro. */
+  if (G.player.x + G.player.w > boss.x && G.player.x < boss.x + boss.w && G.player.y + G.player.h > boss.y && G.player.y < boss.y + boss.h) {
+    const stomp = G.player.velY > 0 && G.player.y + G.player.h < boss.y + boss.h * 0.4;
+    if (stomp) {
+      const dmg = boss.stunned > 0 ? 2 : 1;
+      G.player.velY = -10; // quica
+      SOUNDS.stomp();
+      spawnParticles(G.player.x + G.player.w / 2, boss.y, ['#ffd700', '#fff'], 10);
+      damageBoss(dmg, G.player.x + G.player.w / 2, boss.y, false);
+    } else if (!G.player.invulnerable && !G.player.hasShield) {
+      takeDamage();
+    }
+  }
 }
 
 export function damageBoss(dmg: number, hx: number, hy: number, isSuper: boolean): void {

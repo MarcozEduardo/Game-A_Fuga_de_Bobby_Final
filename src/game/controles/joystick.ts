@@ -20,15 +20,19 @@ let lastSig = '';
 
 export function drawTouchControls(octx: CanvasRenderingContext2D, overlay: HTMLCanvasElement): void {
   const joy = G.joy, fire = G.fire;
-  const sig = `${G.gameState}|${G.gameOver}|${G.victoryPhase}|${G.bombs}|${overlay.width}x${overlay.height}|${joy.active}|${Math.round(joy.x)}|${Math.round(joy.y)}|${fire.active}`;
+  /* assinatura inclui baseX/baseY — com o joystick flutuante a ÂNCORA
+     muda a cada toque, então ela também precisa disparar o redesenho */
+  const sig = `${G.gameState}|${G.gameOver}|${G.victoryPhase}|${G.bombs}|${overlay.width}x${overlay.height}|${joy.active}|${Math.round(joy.baseX)}|${Math.round(joy.baseY)}|${Math.round(joy.x)}|${Math.round(joy.y)}|${fire.active}`;
   if (sig === lastSig) return; // nada mudou: nem limpa, nem desenha
   lastSig = sig;
   octx.clearRect(0, 0, overlay.width, overlay.height);
   if (!isTouch || G.gameState !== 'GAME' || G.gameOver || G.victoryPhase > 2) return;
   const W = overlay.width, H = overlay.height;
 
-  /* ---- joystick (canto esquerdo, fixo) ---- */
-  const bx = 95, by = H - 115;
+  /* ---- joystick: FLUTUANTE (nasce no toque) ou "fantasma" perto da
+         borda quando solto (diff do chefe) ---- */
+  const bx = joy.active ? joy.baseX : 60;
+  const by = joy.active ? joy.baseY : H - 90;
   const inJump = joy.active && joy.baseY - joy.y >= JUMP_ZONE;
   octx.save();
   octx.fillStyle = 'rgba(255,215,0,0.10)'; octx.strokeStyle = 'rgba(255,215,0,0.45)'; octx.lineWidth = 2;
