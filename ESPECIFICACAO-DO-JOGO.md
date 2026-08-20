@@ -60,6 +60,13 @@ src/game/
 5. [x] **PAREDE** — resolvido (coluna sólida y=0–350 + parede de rocha visível; abre junto com o portão quando o boss explode)
 6. [x] **ESTAÇÃO** — resolvido (cerca + portão c/ fechadura dourada + casinha c/ janela acesa + torre + antena parabólica, fiel ao original; testado pelo chefe)
 7. [x] **PERFORMANCE MOBILE** — overlay do joystick com dirty-check (só redesenha quando o dedo muda algo; antes limpava a tela inteira TODO frame). Aguarda veredito do chefe no aparelho.
+8. [x] **MONTANHAS** — serras dentadas com neve e parallax de volta (a "fumaceira" saiu) — `cenario/fundo.ts`
+9. [ ] **BOMBA NO CHÃO NÃO DÁ DANO NO BOSS** — explosão só fere o boss a até 80px do epicentro — `entidades/objetos/bombas.ts` ← PRÓXIMO
+10. [ ] **1,5s APÓS PISAR NO MARCOS** pra começar a animação da conquista — `entidades/robos.ts`
+11. [ ] **MORTOS DO TAMANHO NORMAL DO BOBBY** (hoje estão menores) — `entidades/robos.ts` / `lugares/camara.ts`
+12. [ ] **PRISIONEIROS LUTANDO DE DENTRO PRA FORA** (hoje lutam pra entrar) — mexe na cena APROVADA: pinça! — `state.ts` + `entidades/robos.ts`
+13. [ ] **TRAVA: morrer na plataforma com o boss encostando** congela o jogo — diagnosticar a causa primeiro
+14. [ ] **PULAR NA CABEÇA DO BOSS** (stomp) — mecânica nova
 
 ## 🚫 PROIBIDO (lições aprendidas)
 - Trabalhar pela metade (causou a tela azul).

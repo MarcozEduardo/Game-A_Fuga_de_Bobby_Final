@@ -11,19 +11,52 @@ function lerpColor(c1: string, c2: string, t: number): string {
   return `rgb(${Math.round(r1 + (r2 - r1) * t)},${Math.round(g1 + (g2 - g1) * t)},${Math.round(b1 + (b2 - b1) * t)})`;
 }
 
-function drawMountains(ctx: CanvasRenderingContext2D, factor: number, baseY: number, color: string, amp: number): void {
-  ctx.fillStyle = color;
-  ctx.beginPath();
-  ctx.moveTo(0, ctx.canvas.height);
+/* MONTANHAS DE VOLTA — serra dentada estilo pixel-art (a "fumaceira"
+   de ondas suaves foi embora). 2 camadas em parallax, picos com neve
+   e cores que clareiam junto com o nascer do sol. Determinísticas
+   (hash por dente) → nunca piscam. */
+function drawMountains(
+  ctx: CanvasRenderingContext2D,
+  factor: number,
+  baseY: number,
+  colorNight: string,
+  colorDay: string,
+  snowNight: string,
+  snowDay: string,
+  amp: number,
+  snowLine: number
+): void {
   const off = G.camera.x * factor;
-  for (let x = 0; x <= ctx.canvas.width + 60; x += 60) {
-    const wx = x + off;
-    const y = baseY - Math.abs(Math.sin(wx * 0.008) * amp) - Math.abs(Math.sin(wx * 0.003) * amp * 0.6);
+  const step = 44; // largura de cada dente da serra
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+  const t = G.sunriseProgress;
+  ctx.fillStyle = lerpColor(colorNight, colorDay, t);
+  ctx.beginPath();
+  ctx.moveTo(-6, H);
+  const i0 = Math.floor((off - step) / step);
+  const i1 = Math.ceil((off + W + step) / step);
+  const peaks: number[][] = [];
+  for (let i = i0; i <= i1; i++) {
+    const x = i * step - off;
+    const h1 = (((i * 2654435761) >>> 8) % 1000) / 1000;
+    const h2 = (((i * 97463421) >>> 8) % 1000) / 1000;
+    const y = baseY - h1 * amp - h2 * amp * 0.45;
     ctx.lineTo(x, y);
+    if (baseY - y > snowLine) peaks.push([x, y]);
   }
-  ctx.lineTo(ctx.canvas.width, ctx.canvas.height);
+  ctx.lineTo(W + 6, H);
   ctx.closePath();
   ctx.fill();
+  /* neve nos picos mais altos */
+  ctx.fillStyle = lerpColor(snowNight, snowDay, t);
+  peaks.forEach(([x, y]) => {
+    ctx.beginPath();
+    ctx.moveTo(x - 10, y + 9);
+    ctx.lineTo(x, y);
+    ctx.lineTo(x + 10, y + 9);
+    ctx.closePath();
+    ctx.fill();
+  });
 }
 
 export function drawBackground(ctx: CanvasRenderingContext2D): void {
@@ -44,9 +77,9 @@ export function drawBackground(ctx: CanvasRenderingContext2D): void {
   ctx.fillStyle = caches.skyGrad!;
   ctx.fillRect(0, HUD_HEIGHT, ctx.canvas.width, ctx.canvas.height - HUD_HEIGHT);
 
-  /* montanhas em parallax */
-  drawMountains(ctx, 0.25, 250, '#1a2440', 90);
-  drawMountains(ctx, 0.45, 285, '#232f52', 70);
+  /* montanhas em parallax (longe → perto) */
+  drawMountains(ctx, 0.22, 258, '#151d38', '#6f93b8', '#2a3a5e', '#e8f2fa', 110, 78);
+  drawMountains(ctx, 0.45, 300, '#1b2547', '#41628c', '#22304f', '#dfe9f5', 85, 60);
 
   /* lua (antes do nascer do sol) */
   if (G.sunriseProgress < 0.6) {
