@@ -78,6 +78,15 @@ export function drawFortressGate(ctx: CanvasRenderingContext2D): void {
     ctx.fillRect(gx, 330, 10, 20); ctx.fillRect(gx + 14, 326, 12, 24);
     return;
   }
+  /* FIX A — parede de ROCHA acima do portão (do teto da câmara até a
+     trave): antes era um vão invisível, agora tem cara de parede da
+     caverna — rachaduras e camadas de pedra */
+  ctx.fillStyle = '#3a2f26'; ctx.fillRect(gx - 6, 80, GATE_W + 12, 144);
+  ctx.fillStyle = '#2c231c';
+  ctx.fillRect(gx, 100, GATE_W, 4); ctx.fillRect(gx - 3, 140, GATE_W + 6, 4); ctx.fillRect(gx, 180, GATE_W, 4);
+  ctx.strokeStyle = '#4a3a2c'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(gx + 6, 90); ctx.lineTo(gx + 14, 130); ctx.lineTo(gx + 8, 170); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(gx + 20, 110); ctx.lineTo(gx + 16, 156); ctx.stroke();
   ctx.fillStyle = '#555'; ctx.fillRect(gx - 6, 224, GATE_W + 12, 8);
   ctx.fillStyle = '#666'; ctx.fillRect(gx, 230, GATE_W, 120);
   ctx.fillStyle = '#444';

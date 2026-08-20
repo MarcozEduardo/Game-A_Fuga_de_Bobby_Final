@@ -52,8 +52,8 @@ Mobile 1:1. Som reativado (FIX SOM entregue).
 1. ✅ **FIX SOM** — entregue.
 2. ✅ **FIX Bomba** — entregue (5 de dano no boss = 2 bombas matam; inimigos a
    80px morrem; queimado + tremor de impacto).
-3. **FIX Parede da masmorra:** lado direito, acima do portão — Bobby está
-   conseguindo pular por cima. Fechar o vão. ← PRÓXIMO
+3. ✅ **FIX Parede da masmorra** — entregue (coluna sólida + parede de rocha
+   visível acima do portão; explode junto com o boss na cutscene).
 4. **FIX Estação de rádio completa:** hoje só existe a antena. Voltar a
    estação como era no original (cerca + portão com fechadura dourada +
    casinha com janela acesa). O chefe pode enviar o HTML original se precisar.

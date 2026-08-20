@@ -57,7 +57,7 @@ src/game/
 2. [x] **BOMBA** — resolvido (5 de dano no boss, mata inimigos a 80px, queimado, tremor)
 3. [x] **ALINHAMENTO** — "Curtiu a jornada?" voltou ao centro (cards.ts)
 4. [x] **BURACO ANTES DO MARCOS** — agora é REAL (gap 1680→1800, 120px) com aviso de abismo
-5. [ ] **PAREDE** — Bobby pula por cima do portão (lado direito) ← PRÓXIMO
+5. [x] **PAREDE** — resolvido (coluna sólida y=0–350 + parede de rocha visível; abre junto com o portão quando o boss explode)
 6. [ ] **ESTAÇÃO** — só tem a antena; faltam cerca/portão/casinha
 7. [ ] **PERFORMANCE MOBILE** — por último (ordem do chefe)
 

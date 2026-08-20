@@ -442,8 +442,11 @@ export function resolveLetterCollision(): void {
 
 /* portão da fortaleza (bloqueia a saída até o boss morrer) */
 export function resolveGateCollision(): void {
-  if (G.gateDestroyed) return;
-  const g = { x: GATE_X, y: 230, w: GATE_W, h: 120 };
+  if (G.gateDestroyed) return; // explode com o boss → passagem livre p/ a cutscene
+  /* FIX A — a coluna INTEIRA é sólida enquanto o portão está fechado:
+     antes só o portão (y 230–350) bloqueava, e Bobby PULAVA pelo vão
+     invisível acima dele (y < 230) */
+  const g = { x: GATE_X, y: 0, w: GATE_W, h: 350 };
   if (G.player.x < g.x + g.w && G.player.x + G.player.w > g.x && G.player.y < g.y + g.h && G.player.y + G.player.h > g.y) {
     G.player.x = g.x - G.player.w; // Bobby só pode vir da esquerda
   }
