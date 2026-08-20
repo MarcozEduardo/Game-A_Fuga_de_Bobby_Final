@@ -17,6 +17,13 @@ export function drawLoadingScreen(ctx: CanvasRenderingContext2D): void {
   const bobbyX = ctx.canvas.width * 0.1 + G.loadProgress * (ctx.canvas.width * 0.7) / 100;
   G.bobbyRunFrame = Math.floor(G.frameCount / 6) % 3;
   drawPixelArt(ctx, BOBBY_RUN, G.bobbyRunFrame, PAL_BOBBY, bobbyX, 220, 4, false);
+  /* rastro do Bobby correndo — os 3 reflexos repetidos do original,
+     cada um mais transparente e num frame anterior da corrida */
+  for (let i = 1; i <= 3; i++) {
+    ctx.globalAlpha = 0.3 / i;
+    drawPixelArt(ctx, BOBBY_RUN, (G.bobbyRunFrame + i) % 3, PAL_BOBBY, bobbyX - i * 25, 220, 4, false);
+  }
+  ctx.globalAlpha = 1;
   const barX = ctx.canvas.width * 0.19, barY = 300, barW = ctx.canvas.width * 0.62, barH = 25;
   ctx.strokeStyle = '#00ff44'; ctx.lineWidth = 2; ctx.strokeRect(barX, barY, barW, barH);
   const fillW = barW * (G.loadProgress / 100);

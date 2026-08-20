@@ -59,7 +59,7 @@ src/game/
 4. [x] **BURACO ANTES DO MARCOS** — agora é REAL (gap 1680→1800, 120px) com aviso de abismo
 5. [x] **PAREDE** — resolvido (coluna sólida y=0–350 + parede de rocha visível; abre junto com o portão quando o boss explode)
 6. [x] **ESTAÇÃO** — resolvido (cerca + portão c/ fechadura dourada + casinha c/ janela acesa + torre + antena parabólica, fiel ao original; testado pelo chefe)
-7. [x] **PERFORMANCE MOBILE** — overlay do joystick com dirty-check (só redesenha quando o dedo muda algo; antes limpava a tela inteira TODO frame). Aguarda veredito do chefe no aparelho.
+7. [x] **PERFORMANCE MOBILE** — overlay do joystick com dirty-check + áudio com teto de 10 vozes, throttle de 35ms por som e guarda de contexto suspenso (sem "vozes zumbi" antes do 1º gesto) — `controles/joystick.ts` + `audio.ts`. Aguarda veredito do chefe no aparelho.
 8. [x] **MONTANHAS** — serras dentadas com neve e parallax de volta (a "fumaceira" saiu) — `cenario/fundo.ts`
 9. [x] **BOMBA NO CHÃO NÃO DÁ DANO NO BOSS** — explosão só fere o boss a até 130px do centro dele (2 bombas bem jogadas ainda matam) + **bomba atordoa o boss por 1,5s** (`stunned: 90` no `state.ts`) — `entidades/objetos/bombas.ts` + `state.ts`
 10. [ ] **1,5s APÓS PISAR NO MARCOS** pra começar a animação da conquista — `entidades/robos.ts`

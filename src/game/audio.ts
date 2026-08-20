@@ -40,6 +40,10 @@ export function playTone(freq: number, dur: number, type: OscillatorType = 'sine
     if (activeVoices >= MAX_VOICES) return;      // corta se já tá lotado
 
     const ctx = getCtx();
+    /* Antes do primeiro gesto o contexto nasce SUSPENSO: o som não sairia
+       de qualquer jeito, e o oscilador viraria uma "voz zumbi" presa no
+       contador (onended não dispara com o relógio congelado) — pula. */
+    if (ctx.state === 'suspended') return;
     const o = ctx.createOscillator();
     const g = ctx.createGain();
     o.type = type;
