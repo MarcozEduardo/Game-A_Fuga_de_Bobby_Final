@@ -54,10 +54,13 @@ Mobile 1:1. Som reativado (FIX SOM entregue).
    80px morrem; queimado + tremor de impacto).
 3. ✅ **FIX Parede da masmorra** — entregue (coluna sólida + parede de rocha
    visível acima do portão; explode junto com o boss na cutscene).
-4. **FIX Estação de rádio completa:** hoje só existe a antena. Voltar a
-   estação como era no original (cerca + portão com fechadura dourada +
-   casinha com janela acesa). O chefe pode enviar o HTML original se precisar.
-5. **ÚLTIMO — Performance no mobile** (lentidão). Só quando 3-4 estiverem OK.
+4. ✅ **FIX Estação de rádio completa** — entregue e **testada pelo chefe**
+   (cerca + portão com fechadura dourada + casinha com janela acesa +
+   antena parabólica, fiel ao HTML original).
+5. ✅ **Performance no mobile** — entregue (overlay do joystick com
+   dirty-check em `controles/joystick.ts`). **Veredito final é do chefe,
+   no aparelho.** Se ainda travar: próximo suspeito é pré-render dos
+   textos fixos do HUD (arquivo `telas/hud.ts`).
 
 ## 💡 POR QUE ESTE ARQUIVO EXISTE
 Contexto longo = erro bobo (foi assim que os robôs cresceram e a estação sumiu).

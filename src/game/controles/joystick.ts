@@ -12,11 +12,20 @@ export function bombBtnPos(overlay: HTMLCanvasElement) {
   return { x: overlay.width - 187, y: overlay.height - 100, r: 28 };
 }
 
+/* PERF (FIX C) — assinatura do estado: o overlay só é limpo e redesenhado
+   quando ALGO muda (dedo no joystick, tiro, bombas, fase, resize).
+   Antes: clearRect da tela INTEIRA + ~30 formas redesenhadas TODO frame,
+   mesmo com o celular parado — o maior ralo de FPS do jogo no mobile. */
+let lastSig = '';
+
 export function drawTouchControls(octx: CanvasRenderingContext2D, overlay: HTMLCanvasElement): void {
+  const joy = G.joy, fire = G.fire;
+  const sig = `${G.gameState}|${G.gameOver}|${G.victoryPhase}|${G.bombs}|${overlay.width}x${overlay.height}|${joy.active}|${Math.round(joy.x)}|${Math.round(joy.y)}|${fire.active}`;
+  if (sig === lastSig) return; // nada mudou: nem limpa, nem desenha
+  lastSig = sig;
   octx.clearRect(0, 0, overlay.width, overlay.height);
   if (!isTouch || G.gameState !== 'GAME' || G.gameOver || G.victoryPhase > 2) return;
   const W = overlay.width, H = overlay.height;
-  const joy = G.joy, fire = G.fire;
 
   /* ---- joystick (canto esquerdo, fixo) ---- */
   const bx = 95, by = H - 115;
