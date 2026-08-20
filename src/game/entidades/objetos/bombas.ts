@@ -64,9 +64,11 @@ function explodeBomb(b: BombProj, markY: number | null): void {
      Antes: qualquer bomba jogada no chão (em qualquer lugar do mapa)
      já tirava vida do chefão. Agora a explosão precisa estar a até
      130px do centro do boss — então 2 bombas bem jogadas ainda matam. */
-  const bcx = G.boss.x + G.boss.w / 2;
-  const bcy = G.boss.y + G.boss.h / 2;
-  if (Math.hypot(bcx - b.x, bcy - b.y) < 130) {
+  /* O boss VOA (y 100–310) e a bomba explode NO CHÃO (~350): medir a
+     distância até o CENTRO dele deixava o dano quase impossível. Agora
+     vale a distância HORIZONTAL: jogou perto dos pés dele, machucou.
+     Longe = segue sem dano (o fix antigo continua valendo). */
+  if (Math.abs(G.boss.x + G.boss.w / 2 - b.x) < 150) {
     damageBoss(5, b.x, b.y, false);
     G.boss.stunned = 90; // ~1.5s atordoado → pode pular na cabeça pra dano extra
   }

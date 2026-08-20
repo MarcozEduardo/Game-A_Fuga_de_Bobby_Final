@@ -332,7 +332,17 @@ export function createGame(canvas: HTMLCanvasElement, overlay: HTMLCanvasElement
       drawIntroScreen(ctx);
     } else if (G.gameState === 'DEFEAT') {
       drawBackground(ctx);
+      /* FIX — o cenário do covil (câmara, mina, portão, base) também é
+         desenhado na derrota: antes as paredes "sumiam" quando o Bobby
+         morria lá dentro, porque este ramo não as desenhava */
+      drawMineChamberBack(ctx);
       drawPlatforms(ctx);
+      drawMineChamberFront(ctx);
+      drawDeadSoldiers(ctx);
+      drawScorchMarks(ctx);
+      drawMine(ctx);
+      drawFortressGate(ctx);
+      drawSecretBase(ctx);
       drawSmoke(ctx); drawParticles(ctx);
       drawCollectibles(ctx); drawEnemies(ctx); drawBoss(ctx);
       drawDefeatWorld(ctx);

@@ -66,7 +66,9 @@ src/game/
 11. [ ] **MORTOS DO TAMANHO NORMAL DO BOBBY** (hoje estão menores) — `entidades/robos.ts` / `lugares/camara.ts`
 12. [ ] **PRISIONEIROS LUTANDO DE DENTRO PRA FORA** (hoje lutam pra entrar) — mexe na cena APROVADA: pinça! — `state.ts` + `entidades/robos.ts`
 13. [ ] **TRAVA: morrer na plataforma com o boss encostando** congela o jogo — diagnosticar a causa primeiro
-14. [ ] **PULAR NA CABEÇA DO BOSS** (stomp) — mecânica nova
+14. [ ] **PULAR NA CABEÇA DO BOSS** (stomp) — mecânica nova; já existe `boss.stunned` (bomba atordoa 90f)
+15. [x] **BOMBA FERINDO O BOSS** — dano agora medido em distância HORIZONTAL (<150px dos pés); antes media até o centro do boss voando e nunca alcançava a explosão no chão — `entidades/objetos/bombas.ts`
+16. [x] **PAREDES DO COVIL NA DERROTA** — o ramo DEFEAT do gameLoop agora desenha câmara/mina/portão/base (antes "sumiam" ao morrer lá dentro) — `engine.ts`
 
 ## 🚫 PROIBIDO (lições aprendidas)
 - Trabalhar pela metade (causou a tela azul).
