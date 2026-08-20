@@ -17,6 +17,11 @@ recrutador: jogável, bonito, leve. O jogo NÃO pode ficar gigante.
 3. `QUARENTENA/ORDEM-DE-PEDIDO.md` — protocolo obrigatório pra qualquer código
 4. `src/game/*.ts` — o código atual (sempre ler antes de editar)
 
+## 📖 DOCUMENTOS DE PORTFÓLIO (confraternização — reunião 15)
+- `STUDY_CASE.md` — a história completa da batalha (do quadradinho ao foguete)
+- `README.md` — porta de entrada do GitHub, caprichada pelo Time
+- Ambos aprovados pelo chefe na confraternização. **Não reescrever sem ordem.**
+
 ## 🚫 LIXO — NÃO LER (histórico, já superado)
 - `REUNIOES/Reuniao-01` a `13` — atas antigas. Só curiosidade histórica.
 - Qualquer chunk de HTML colado em chat antigo — o código atual é outro.
