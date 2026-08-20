@@ -33,9 +33,11 @@ recrutador: jogável, bonito, leve. O jogo NÃO pode ficar gigante.
 ## ⛔ REGRAS DE PEDRA
 1. **UM fix por vez.** Nada de "aproveitar e já que estou aqui...".
 2. **ZERO-MEMÓRIA:** proibido editar de cabeça — leia o bloco antes.
-3. **Jogo aprovado não se toca.** Refatorar/dividir só com ordem explícita do chefe
-   (a fragmentação em módulos foi APROVADA — 7🟢 — mas ainda não começou;
-   fazer UM módulo por O.S., jogo pixel-idêntico).
+3. **Jogo aprovado não se toca.** Refatorar/dividir só com ordem explícita do chefe.
+   ✅ **Fragmentação CONCLUÍDA (O.S. 002, build verde, 47 módulos):**
+   `state.ts` (G) + cenario/ + personagens/ + entidades/ + lugares/ + telas/ +
+   controles/. Engine virou maestro magrinho. Daqui em frente: cada O.S. toca UM
+   módulo por vez; nenhum módulo importa o engine.
 4. Robôs amigos são **menorzinhos (escala 2)**. NÃO do tamanho do Bobby.
 5. Relatório no chat **só quando terminar**; comentários de trabalho vão p/ registros.
 
@@ -47,14 +49,15 @@ chave (15s → voa) → antena → foguete → VITÓRIA. Cards c/ LinkedIn.
 Mobile 1:1. Som reativado (FIX SOM entregue).
 
 ## 📋 FILA DE PENDÊNCIAS (próximas O.S., nesta ordem)
-1. **FIX 2 — Bomba:** tem que acertar o boss E inimigos próximos, com efeito de
-   **queimado + explosão de impacto**.
-2. **FIX 3 — Parede da masmorra:** lado direito, acima do portão — Bobby está
-   conseguindo pular por cima. Fechar o vão.
-3. **FIX 4 — Estação de rádio completa:** hoje só existe a antena. Voltar a
+1. ✅ **FIX SOM** — entregue.
+2. ✅ **FIX Bomba** — entregue (5 de dano no boss = 2 bombas matam; inimigos a
+   80px morrem; queimado + tremor de impacto).
+3. **FIX Parede da masmorra:** lado direito, acima do portão — Bobby está
+   conseguindo pular por cima. Fechar o vão. ← PRÓXIMO
+4. **FIX Estação de rádio completa:** hoje só existe a antena. Voltar a
    estação como era no original (cerca + portão com fechadura dourada +
    casinha com janela acesa). O chefe pode enviar o HTML original se precisar.
-4. **ÚLTIMO — Performance no mobile** (lentidão). Só quando 1-3 estiverem OK.
+5. **ÚLTIMO — Performance no mobile** (lentidão). Só quando 3-4 estiverem OK.
 
 ## 💡 POR QUE ESTE ARQUIVO EXISTE
 Contexto longo = erro bobo (foi assim que os robôs cresceram e a estação sumiu).

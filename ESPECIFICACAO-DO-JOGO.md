@@ -37,11 +37,27 @@
 - Boss morre → anda em chamas até o portão → **explode o portão** → chave aparece.
 - Robôs amigos: atiram **pedras** (sem dano), HP=3, ficam agitados. Após 3 mortos, um corre e grita **"Socorro!!!"** → boss ri **"Hahaha..."** → solta **míssil do ombro** → abre buraco na rocha.
 
+## 🧩 ESTRUTURA DE ARQUIVOS (O.S. 002 — fragmentação CONCLUÍDA)
+```
+src/game/
+├── engine.ts            ← maestro magrinho (loop, input, câmera, jogador)
+├── state.ts             ← G (estado único) + constantes + mecânicas puras
+├── sprites.ts / audio.ts
+├── cenario/  fundo.ts · plataformas.ts
+├── personagens/  bobby.ts · boss.ts
+├── entidades/  inimigos.ts · robos.ts · objetos/{coletaveis,bombas}.ts
+├── lugares/  mina.ts · camara.ts · estacao.ts
+├── telas/  intro.ts · hud.ts · cards.ts
+└── controles/  joystick.ts
+```
+> Regra: cada O.S. toca UM módulo por vez. state.ts é lido por todos; nenhum módulo importa o engine.
+
 ## 🐛 BUGS CONHECIDOS (fila de correção — 1 por vez)
-1. [ ] **SOM** — jogo está mudo (contexto suspenso não é retomado)
-2. [ ] **BOMBA** — precisa acertar boss/inimigos + queimado + impacto
-3. [ ] **PAREDE** — Bobby pula por cima do portão (lado direito)
+1. [x] **SOM** — resolvido (resumeAudio em todo gesto + garantia no loop)
+2. [x] **BOMBA** — resolvido (5 de dano no boss, mata inimigos a 80px, queimado, tremor)
+3. [ ] **PAREDE** — Bobby pula por cima do portão (lado direito) ← PRÓXIMO
 4. [ ] **ESTAÇÃO** — só tem a antena; faltam cerca/portão/casinha
+5. [ ] **PERFORMANCE MOBILE** — por último (ordem do chefe)
 
 ## 🚫 PROIBIDO (lições aprendidas)
 - Trabalhar pela metade (causou a tela azul).
