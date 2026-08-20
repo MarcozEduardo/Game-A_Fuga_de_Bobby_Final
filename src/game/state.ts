@@ -72,6 +72,7 @@ export interface BossState {
   hp: number; maxHp: number; hitsReceived: number; shootCooldown: number; active: boolean; defeated: boolean;
   pattern: number; patternTimer: number; baseY: number; lastX: number; lastY: number;
   deathT: number; hidden: boolean; fallVelY: number;
+  stunned: number;                                    // ⬅️ NOVO — frames restantes atordoado (bomba)
 }
 export interface GoldenKeyState { x: number; y: number; w: number; h: number; active: boolean; collected: boolean; bobT: number }
 
@@ -186,8 +187,9 @@ export function freshBoss(): BossState {
     x: 2900, y: 100, w: BW, h: BH, speed: 2, dir: -1, frame: 0, timer: 0,
     hp: 10, maxHp: 10, hitsReceived: 0, shootCooldown: 0, active: false, defeated: false,
     pattern: 0, patternTimer: 0, baseY: 100, lastX: 2900, lastY: 200,
-    deathT: 0, hidden: false, fallVelY: 0,
-  };
+      deathT: 0, hidden: false, fallVelY: 0,
+      stunned: 0,                                        // ⬅️ NOVO
+    };
 }
 export function freshRobos(): Robo[] {
   return [

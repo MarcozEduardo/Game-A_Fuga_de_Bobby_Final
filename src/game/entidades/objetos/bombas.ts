@@ -66,7 +66,10 @@ function explodeBomb(b: BombProj, markY: number | null): void {
      130px do centro do boss — então 2 bombas bem jogadas ainda matam. */
   const bcx = G.boss.x + G.boss.w / 2;
   const bcy = G.boss.y + G.boss.h / 2;
-  if (Math.hypot(bcx - b.x, bcy - b.y) < 130) damageBoss(5, b.x, b.y, false);
+  if (Math.hypot(bcx - b.x, bcy - b.y) < 130) {
+    damageBoss(5, b.x, b.y, false);
+    G.boss.stunned = 90; // ~1.5s atordoado → pode pular na cabeça pra dano extra
+  }
 }
 
 export function drawBombProjs(ctx: CanvasRenderingContext2D): void {
