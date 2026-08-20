@@ -1,1 +1,71 @@
 @import "tailwindcss";
+
+@theme {
+  --font-pixel: "Press Start 2P", "Courier New", monospace;
+  --font-term: "VT323", "Courier New", monospace;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #0c101d;
+  overscroll-behavior: none;
+  overflow: hidden;
+}
+
+/* Varredura CRT por cima de tudo */
+.scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.13) 3px,
+    rgba(0, 0, 0, 0) 4px
+  );
+}
+
+.vignette {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0) 55%,
+    rgba(0, 0, 0, 0.42) 100%
+  );
+}
+
+canvas.game-canvas {
+  image-rendering: pixelated;
+  touch-action: none;
+}
+
+@keyframes title-glow {
+  0%,
+  100% {
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  }
+  50% {
+    text-shadow:
+      0 0 20px rgba(255, 215, 0, 0.95),
+      0 0 42px rgba(255, 136, 0, 0.4);
+  }
+}
+.title-glow {
+  animation: title-glow 2.4s ease-in-out infinite;
+}
+
+@keyframes blink-soft {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+.blink-soft {
+  animation: blink-soft 1.6s ease-in-out infinite;
+}
