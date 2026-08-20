@@ -60,8 +60,13 @@ function explodeBomb(b: BombProj, markY: number | null): void {
       spawnParticles(e.x + e.w / 2, e.y + e.h / 2, ['#e74c3c', '#fff', '#ffd700'], 16);
     }
   }
-  /* 2 bombas matam o chefão (5 de dano cada) */
-  damageBoss(5, b.x, b.y, false);
+  /* FIX — a bomba só fere o boss se a explosão for PERTO dele.
+     Antes: qualquer bomba jogada no chão (em qualquer lugar do mapa)
+     já tirava vida do chefão. Agora a explosão precisa estar a até
+     130px do centro do boss — então 2 bombas bem jogadas ainda matam. */
+  const bcx = G.boss.x + G.boss.w / 2;
+  const bcy = G.boss.y + G.boss.h / 2;
+  if (Math.hypot(bcx - b.x, bcy - b.y) < 130) damageBoss(5, b.x, b.y, false);
 }
 
 export function drawBombProjs(ctx: CanvasRenderingContext2D): void {
