@@ -70,6 +70,9 @@ src/game/
 17. [x] **JOYSTICK FLUTUANTE** (diff do chefe) — nasce onde o polegar toca, clampado à metade esquerda; assinatura do overlay inclui a âncora — `engine.ts` + `controles/joystick.ts`
 18. [x] **BUG DO PULO NO MOBILE** (diff do chefe) — `jumpHeld` só marca quando o pulo acontece (no chão); aterrissou com dedo pra cima = pula na hora — `engine.ts`
 19. [x] **BOSS MAIS BAIXO** — `baseY` 100→150: padrões oscilam mais perto do alcance — `state.ts`; já existe `boss.stunned` (bomba atordoa 90f)
+20. [x] **CÂMERA DA CUTSCENE DE VITÓRIA** (bug principal do final) — a câmera agora acompanha TODA a sequência: fases 1-2 enquadram boss/chave + Bobby, fases 3-7 seguem o Bobby até a antena/foguete. Antes ela só rodava com victoryPhase<=2, então o Bobby andava pra fora da tela e o final parecia "travado" — `engine.ts`
+21. [x] **BOSS DUPLICADO NA MORTE** — drawBoss agora ignora `defeated` (a cena de chamas é só da drawVictoryCutscene) — `personagens/boss.ts`
+22. [x] **BALA MAIS FORTE** — dano normal 1→2 (5 tiros derrubam o boss, antes 10); regra das 2 bombas (5+5) intacta — `engine.ts`
 15. [x] **BOMBA FERINDO O BOSS** — dano agora medido em distância HORIZONTAL (<150px dos pés); antes media até o centro do boss voando e nunca alcançava a explosão no chão — `entidades/objetos/bombas.ts`
 16. [x] **PAREDES DO COVIL NA DERROTA** — o ramo DEFEAT do gameLoop agora desenha câmara/mina/portão/base (antes "sumiam" ao morrer lá dentro) — `engine.ts`
 

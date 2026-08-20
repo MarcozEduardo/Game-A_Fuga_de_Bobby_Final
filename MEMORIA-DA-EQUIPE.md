@@ -48,19 +48,19 @@ câmara do boss (laranja) → 2 bombas matam → boss cai no portão e explode �
 chave (15s → voa) → antena → foguete → VITÓRIA. Cards c/ LinkedIn.
 Mobile 1:1. Som reativado (FIX SOM entregue).
 
-## 📋 FILA DE PENDÊNCIAS (próximas O.S., nesta ordem)
-1. ✅ **FIX SOM** — entregue.
-2. ✅ **FIX Bomba** — entregue (5 de dano no boss = 2 bombas matam; inimigos a
-   80px morrem; queimado + tremor de impacto).
-3. ✅ **FIX Parede da masmorra** — entregue (coluna sólida + parede de rocha
-   visível acima do portão; explode junto com o boss na cutscene).
-4. ✅ **FIX Estação de rádio completa** — entregue e **testada pelo chefe**
-   (cerca + portão com fechadura dourada + casinha com janela acesa +
-   antena parabólica, fiel ao HTML original).
-5. ✅ **Performance no mobile** — entregue (overlay do joystick com
-   dirty-check em `controles/joystick.ts`). **Veredito final é do chefe,
-   no aparelho.** Se ainda travar: próximo suspeito é pré-render dos
-   textos fixos do HUD (arquivo `telas/hud.ts`).
+## 📋 FILA DE PENDÊNCIAS — JOGO PRATICAMENTE FECHADO 🎉
+Todos os fixes entregues. Os ÚLTIMOS (reta final, bug do final do jogo):
+- ✅ **CÂMERA DA CUTSCENE DE VITÓRIA** — câmera acompanha boss/chave (fases
+  1-2) e o Bobby até a estação (fases 3-7). Era o "final trava" — `engine.ts`
+- ✅ **BOSS DUPLICADO NA MORTE** — drawBoss ignora `defeated` — `boss.ts`
+- ✅ **BALA MAIS FORTE** — dano 1→2 (5 tiros, antes 10) — `engine.ts`
+- Já entregues antes: SOM, Bomba (2 matam), Parede da masmorra, Estação
+  completa, Performance mobile, joystick flutuante, pulo no mobile, boss
+  mais baixo + stun, stomp na cabeça, montanhas, buraco real, etc.
+
+**Próximo passo:** veredito FINAL do chefe no celular (jogar de ponta a
+ponta: loading → vitória). Se o final rodar liso, o jogo está PRONTO pro
+GitHub. Ver `ESPECIFICACAO-DO-JOGO.md` itens 1-22 para o histórico completo.
 
 ## 💡 POR QUE ESTE ARQUIVO EXISTE
 Contexto longo = erro bobo (foi assim que os robôs cresceram e a estação sumiu).

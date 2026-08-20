@@ -12,7 +12,10 @@ import {
 
 export function drawBoss(ctx: CanvasRenderingContext2D): void {
   const boss = G.boss;
-  if (!boss.active || boss.hidden) return;
+  /* defeated → a cena de morte (chamas) é desenhada pela
+     drawVictoryCutscene; sem este guard o boss saía DUPLICADO
+     (normal + pegando fogo, com a barra de vida por cima) */
+  if (!boss.active || boss.hidden || boss.defeated) return;
   const sx = boss.x - G.camera.x;
   let pal = PAL_MECHA;
   if (boss.hp < 4 && Math.floor(G.frameCount / 6) % 2 === 0) pal = ['#ff5555', '#aa2222', '#ffffff', '#ffff00', '#333333'];

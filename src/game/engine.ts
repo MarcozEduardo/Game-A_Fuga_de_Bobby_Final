@@ -76,7 +76,10 @@ export function createGame(canvas: HTMLCanvasElement, overlay: HTMLCanvasElement
     player.shootCooldown--;
     if (player.shooting && player.hasGun && player.shootCooldown <= 0) {
       const isSuper = player.hasSuperAmmo && player.superShots > 0;
-      G.playerBullets.push({ x: player.dir === 1 ? player.x + player.w : player.x - 12, y: player.y + 12, vx: player.dir * (isSuper ? 14 : 10), w: isSuper ? 18 : 12, h: isSuper ? 8 : 4, isSuper, damage: isSuper ? 4 : 1 });
+      /* TUNING — bala normal causa 2 (antes 1): o boss tem 10 de vida,
+         então agora são 5 tiros em vez de 10. A regra sagrada das
+         2 bombas (5+5=10) continua intacta. */
+      G.playerBullets.push({ x: player.dir === 1 ? player.x + player.w : player.x - 12, y: player.y + 12, vx: player.dir * (isSuper ? 14 : 10), w: isSuper ? 18 : 12, h: isSuper ? 8 : 4, isSuper, damage: isSuper ? 4 : 2 });
       player.shootCooldown = isSuper ? 20 : 12;
       if (isSuper) { player.superShots--; SOUNDS.superShot(); if (player.superShots <= 0) player.hasSuperAmmo = false; }
       else SOUNDS.shoot();
@@ -154,11 +157,24 @@ export function createGame(canvas: HTMLCanvasElement, overlay: HTMLCanvasElement
       G.camera.x += (target - G.camera.x) * 0.06;
       return;
     }
-    if (G.victoryPhase > 2) {
-      if (G.victoryPhase >= 3 && G.victoryPhase <= 7) {
-        const targetCamX = Math.max(0, Math.min(LEVEL_WIDTH - canvas.width, G.player.x - canvas.width / 3));
-        G.camera.x += (targetCamX - G.camera.x) * 0.05;
+    /* VITÓRIA: a câmera acompanha a ação em TODAS as fases da cutscene.
+       Antes ela só era chamada com victoryPhase<=2, então nas fases 3-7
+       (caminhada até a estação) o Bobby andava pra FORA da tela e o
+       final parecia "travado". Agora:
+         fases 1-2 → enquadra o boss/chave E o Bobby juntos
+         fases 3-7 → segue o Bobby até a antena/foguete */
+    if (G.victoryPhase >= 1 && G.victoryPhase <= 7) {
+      let targetCamX: number;
+      if (G.victoryPhase <= 2) {
+        const focusX = G.victoryPhase === 1 ? G.boss.x : G.goldenKey.x;
+        const minX = Math.min(G.player.x, focusX);
+        const maxX = Math.max(G.player.x + G.player.w, focusX + 40);
+        targetCamX = (minX + maxX) / 2 - canvas.width / 2;
+      } else {
+        targetCamX = G.player.x - canvas.width / 3;
       }
+      targetCamX = Math.max(0, Math.min(LEVEL_WIDTH - canvas.width, targetCamX));
+      G.camera.x += (targetCamX - G.camera.x) * 0.08;
       return;
     }
     const tx = G.player.x - canvas.width / 3;
@@ -399,9 +415,11 @@ export function createGame(canvas: HTMLCanvasElement, overlay: HTMLCanvasElement
         updateBullets();
         updateBombs();
         checkCollections();
-        updateCamera();
         updateTimer();
       }
+      /* câmera SEMPRE atualiza (fora da trava acima): a cutscene de
+         vitória (fases 1-7) precisa dela pra filmar o Bobby até a estação */
+      if (!G.gameOver) updateCamera();
       if (!G.enemiesInitialized) {
         G.enemiesInitialized = true;
         G.enemiesData.forEach((d) => {
