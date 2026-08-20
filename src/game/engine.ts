@@ -2006,6 +2006,7 @@ export function createGame(canvas: HTMLCanvasElement, overlay: HTMLCanvasElement
    *  FLUXO — start / restart / input
    * ===================================================== */
   function startGame() {
+    resumeAudio(); // FIX SOM — garante contexto ativo antes da música
     gameState = 'GAME';
     lastTime = Date.now();
     music.setZone('aventura');
@@ -2040,6 +2041,7 @@ export function createGame(canvas: HTMLCanvasElement, overlay: HTMLCanvasElement
     keyFlyT = -1; bossBurnTimer = 0;
     defeatPhase = 0; defeatTimer = 0; defeatExplosions = []; defeatSignY = -260;
     liBtn.active = false;
+    resumeAudio(); // FIX SOM — retoma o contexto ao reiniciar
     gameState = 'GAME';
     lastTime = Date.now();
     music.setZone('aventura');
@@ -2173,6 +2175,7 @@ export function createGame(canvas: HTMLCanvasElement, overlay: HTMLCanvasElement
   let raf = 0;
   function gameLoop() {
     frameCount++;
+    if (frameCount % 60 === 0) resumeAudio(); // FIX SOM — contexto nunca dorme
     if (screenShake > 0) screenShake = Math.max(0, screenShake - 0.5);
     ctx.save();
     if (screenShake > 0) ctx.translate((Math.random() - 0.5) * screenShake, (Math.random() - 0.5) * screenShake);
@@ -2254,6 +2257,7 @@ export function createGame(canvas: HTMLCanvasElement, overlay: HTMLCanvasElement
   buildLevelLayer();
   window.addEventListener('keydown', onKeyDown);
   window.addEventListener('keyup', onKeyUp);
+  window.addEventListener('pointerdown', resumeAudio); // FIX SOM — qualquer gesto retoma o áudio
   window.addEventListener('touchstart', onTouchStart, { passive: true });
   window.addEventListener('touchmove', onTouchMove, { passive: true });
   window.addEventListener('touchend', onTouchEnd, { passive: true });
@@ -2269,6 +2273,7 @@ export function createGame(canvas: HTMLCanvasElement, overlay: HTMLCanvasElement
       cancelAnimationFrame(raf);
       window.removeEventListener('keydown', onKeyDown);
       window.removeEventListener('keyup', onKeyUp);
+      window.removeEventListener('pointerdown', resumeAudio);
       window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove', onTouchMove);
       window.removeEventListener('touchend', onTouchEnd);
