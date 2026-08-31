@@ -122,7 +122,9 @@ export function damageBoss(dmg: number, hx: number, hy: number, isSuper: boolean
     boss.deathT = 0; boss.fallVelY = 0;
     G.score += 500;
     G.victoryPhase = 1; G.cutsceneTimer = 0;
-    G.bullets = []; G.playerBullets = [];
+    // Congela as balas no lugar em vez de apagar os arrays
+    G.bullets.forEach(b => { b.vx = 0; b.vy = 0; b.frozen = true; });
+    G.playerBullets.forEach(b => { b.vx = 0; b.vy = 0; b.frozen = true; });
     SOUNDS.explosion();
   }
 }

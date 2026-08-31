@@ -368,7 +368,8 @@ export function createGame(canvas: HTMLCanvasElement, overlay: HTMLCanvasElement
       drawFortressGate(ctx);
       drawSecretBase(ctx);
       drawSmoke(ctx); drawParticles(ctx);
-      drawCollectibles(ctx); drawEnemies(ctx); drawBoss(ctx);
+      drawCollectibles(ctx); drawEnemies(ctx);
+      if (!G.boss.defeated) drawBoss(ctx); // So desenha boss se nao estiver derrotado
       drawDefeatWorld(ctx);
       updateDefeat();
       updateParticles(); updateSmoke();
@@ -397,7 +398,7 @@ export function createGame(canvas: HTMLCanvasElement, overlay: HTMLCanvasElement
       drawBullets(ctx);
       drawBombProjs(ctx);
       drawEnemies(ctx);
-      drawBoss(ctx);
+      if (!G.boss.defeated) drawBoss(ctx); // So desenha boss se nao estiver derrotado
       drawCutsceneBattle(ctx);
       drawPlayer(ctx);
       drawD3Fx(ctx);
@@ -411,7 +412,7 @@ export function createGame(canvas: HTMLCanvasElement, overlay: HTMLCanvasElement
       if (!G.gameOver && G.victoryPhase <= 2) {
         updatePlayer();
         updateEnemies();
-        updateBoss();
+        if (!G.boss.defeated) updateBoss(); // So atualiza boss se nao estiver derrotado
         updateBullets();
         updateBombs();
         checkCollections();
