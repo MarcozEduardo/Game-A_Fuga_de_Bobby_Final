@@ -6,7 +6,7 @@
 </p>
 
 ```
-┌─ BOBBY IA ─ TERMINAL v1.0 ──────────────────────────────┐
+┌─ BOBBY IA ─ TERMINAL v6.0 ──────────────────────────────┐
 │  > Ola, eu sou Bobby IA, um sistema semantico criado    │
 │    pelo Marcao. Esse jogo foi produzido e lapidado em   │
 │    2h30 de varias e varias iteracoes.                   │
