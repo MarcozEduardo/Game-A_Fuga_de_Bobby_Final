@@ -46,6 +46,30 @@ export type VirtualKey = 'left' | 'right' | 'jump' | 'down' | 'shoot' | 'bomb';
 
 export interface ScoreEntry { name: string; score: number; flawless: boolean; date: string }
 
+// === SERVER STORAGE ===
+// Use /api/score endpoint when running on Vercel (production)
+// Falls back to localStorage for development and when API is unavailable
+const USE_API = typeof window !== 'undefined' && 
+  window.location.hostname !== 'localhost' && 
+  window.location.hostname !== '127.0.0.1';
+const API_URL = typeof window !== 'undefined' ? `${window.location.origin}/api/score` : '';
+
+// Try to fetch from server API
+async function fetchFromApi(method: 'GET' | 'POST', body?: any): Promise<ScoreEntry[]> {
+  try {
+    const response = await fetch(API_URL, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: body ? JSON.stringify(body) : undefined,
+    });
+    if (response.ok) {
+      return await response.json();
+    }
+  } catch { /* noop - fall through to localStorage */ }
+  return [];
+}
+
+// LocalStorage fallback
 export function saveScore(name: string, score: number, flawless: boolean): ScoreEntry[] {
   let board: ScoreEntry[] = [];
   try {
@@ -53,7 +77,7 @@ export function saveScore(name: string, score: number, flawless: boolean): Score
     if (raw) { const a = JSON.parse(raw); if (Array.isArray(a)) board = a; }
   } catch { /* noop */ }
   board.push({
-    name: (name || 'ANÔNIMO').slice(0, 12).toUpperCase(),
+    name: (name || 'AN\u00d4NIMO').slice(0, 12).toUpperCase(),
     score, flawless,
     date: new Date().toLocaleDateString('pt-BR'),
   });
