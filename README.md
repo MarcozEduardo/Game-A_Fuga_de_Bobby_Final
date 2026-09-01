@@ -264,6 +264,13 @@ No celular, abra o `dev` pela rede local — o layout 1:1 e o joystick aparecem 
 
 ---
 
+## 🎮 Versões do Jogo
+
+- **v7.00 - Covil do Socram (Main)** - Versão atual com cutscene, batalha contra Socram, bombas, e placar no servidor
+- **v1.0 - Versão Original** - [Jogue aqui](https://marcozeduardo.github.io/fuga-de-bobby/)
+
+---
+
 ## 📊 Os Números
 
 | | |
